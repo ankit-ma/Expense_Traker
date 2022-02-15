@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import "./ExpenseForm.css";
 
 function ExpenseForm(props) {
@@ -24,7 +25,7 @@ function ExpenseForm(props) {
     event.preventDefault();
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
     setEnterDate("");
@@ -33,43 +34,60 @@ function ExpenseForm(props) {
     //console.log(expenseData);
     props.onSaveExpense(expenseData);
   };
-
+  const [hideExpenseForm, setExpenseFormHide] = useState(true);
+  const hideNewExpense = () => {
+    setExpenseFormHide(false);
+  };
+  if (hideExpenseForm === true) {
+    return (
+      <form onSubmit={submitEventhandler}>
+        <div className="new-expense__controls">
+          <div className="new-expense__control">
+            <label>Title</label>
+            <input
+              type="text"
+              value={enteredTitle}
+              onChange={titleChangeEventListner}
+            />
+          </div>
+          <div className="new-expense__control">
+            <label>Amount</label>
+            <input
+              type="number"
+              min="0.01"
+              step="0.01"
+              value={enteredAmount}
+              onChange={amountChangedEventHandler}
+            />
+          </div>
+          <div className="new-expense__control">
+            <label>Date</label>
+            <input
+              type="date"
+              min="2019-01-01"
+              max="2023-01-01"
+              value={enteredDate}
+              onChange={dateChangedEventHandler}
+            />
+          </div>
+        </div>
+        <div className="new-expense__actions">
+          <button onClick={hideNewExpense}>Cancel</button>
+          <button type="submit">Add Expense</button>
+        </div>
+      </form>
+    );
+  }
   return (
-    <form onSubmit={submitEventhandler}>
-      <div className="new-expense__controls">
-        <div className="new-expense__control">
-          <label>Title</label>
-          <input
-            type="text"
-            value={enteredTitle}
-            onChange={titleChangeEventListner}
-          />
-        </div>
-        <div className="new-expense__control">
-          <label>Amount</label>
-          <input
-            type="number"
-            min="0.01"
-            step="0.01"
-            value={enteredAmount}
-            onChange={amountChangedEventHandler}
-          />
-        </div>
-        <div className="new-expense__control">
-          <label>Date</label>
-          <input
-            type="date"
-            min="2019-01-01"
-            max="2023-01-01"
-            value={enteredDate}
-            onChange={dateChangedEventHandler}
-          />
-        </div>
-      </div>
-      <div className="new-expense__actions">
-        <button type="submit">Add Expense</button>
-      </div>
-    </form>
+    <div>
+      <button
+        onClick={() => {
+          setExpenseFormHide(true);
+        }}
+      >
+        New expense
+      </button>
+    </div>
   );
 }
 

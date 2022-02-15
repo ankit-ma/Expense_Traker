@@ -15,8 +15,6 @@ function App() {
   const [expenses, setExpense] = useState(INITIAL_DATA);
 
   const addExpense = (expes) => {
-    console.log("In app");
-    console.log(expenses);
     setExpense((prevExpense) => {
       return [expes, ...prevExpense];
     });

@@ -1,6 +1,5 @@
 import "./ExpenseDate.css";
 import Card from "../UI/Card";
-import Circle from "../UI/Circle";
 
 function ExpenseDate(props) {
   const month = props.date.toLocaleString("en-US", { month: "long" });
